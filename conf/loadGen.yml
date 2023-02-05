@@ -1,0 +1,19 @@
+---
+- hosts: all
+  tasks:
+  - name: Adjust default route
+    command: sudo ip route add default via 10.0.2.2
+    become: yes
+  
+  - name: Install python-Scapy and dependencies
+    apt: name={{ item }} update_cache=yes
+    loop: ['python3-scapy', 'net-tools']
+    become: yes
+
+  - name: Adjust arp table
+    command: ip neighbor add 192.168.50.50 lladdr 08:00:27:00:00:00 dev enp0s8 nud permanent
+    become: yes
+  
+  - name: Adjust clock timezone
+    command: timedatectl set-timezone UTC
+    become: yes

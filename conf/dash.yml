@@ -1,0 +1,23 @@
+---
+- hosts: all
+  tasks:
+  - name: Adjust default route
+    command: sudo ip route add default via 10.0.2.2
+    become: yes
+
+  - name: Install packages and dependencies
+    apt: name={{ item }} update_cache=yes
+    loop: ['apache2','net-tools']
+    become: yes
+
+  - name: Create a symbolic link to DASH server
+    command: ln -s /vagrant/videos/ /var/www/html/
+    become: yes
+  
+  - name: Adjust arp table for client VLC
+    command: ip neighbor add 192.168.50.51 lladdr 08:00:27:00:00:01 dev enp0s8 nud permanent
+    become: yes
+ 
+  - name: Adjust clock timezone
+    command: timedatectl set-timezone UTC
+    become: yes
