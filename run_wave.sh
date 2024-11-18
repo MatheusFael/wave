@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PATH_LOADGEN="/vagrant/loadGen"
-TARGET="http://192.168.50.50/videos/bbb-mp4.mpd"
+PATH_LOADGEN="/home/vlc/loadGen"
+TARGET="http://172.17.0.3/video.mp4"
 
 Help()
 {

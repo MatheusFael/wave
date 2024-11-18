@@ -28,7 +28,8 @@ command = [
            '--zoom=0.5',
            '--adaptive-logic=rate',
            '--random',
-           '--loop'
+           '--loop',
+           '--no-audio'
            ]
 
 num_client = 0
@@ -103,8 +104,8 @@ def run(args):
     global sleep_secs
 
     #   file used for create sinusoid wave graph
-    with open('/vagrant/logs/sinusoid_wave.txt','w+') as file:
-        file.write(str(num_client) + '\n')
+    # with open('/vagrant/logs/sinusoid_wave.txt','w+') as file:
+    #     file.write(str(num_client) + '\n')
 
     # until we finish
     while (now < end):
@@ -129,9 +130,9 @@ def run(args):
         logger.debug('%s - Will sleep for %s sec' % (now, sleep_secs))
         logger.debug('Clients active = %s - lambda = %s' % (num_client, math.ceil(lambd)))
         
-        for i in range(int(sleep_secs)):
-            with open('/vagrant/logs/sinusoid_wave.txt','a+') as file:
-                file.write(str(num_client) + '\n')
+        # for i in range(int(sleep_secs)):
+        #     with open('/vagrant/logs/sinusoid_wave.txt','a+') as file:
+        #         file.write(str(num_client) + '\n')
         
         time.sleep(sleep_secs)
     
@@ -140,15 +141,15 @@ def run(args):
             last_pid = start_process(args, FNULL)
             alive.append(last_pid)
             #last_pid.wait()
-            with open('/vagrant/logs/sinusoid_wave.txt','a+') as file:
-                file.write(str(num_client) + '\n')
+            # with open('/vagrant/logs/sinusoid_wave.txt','a+') as file:
+            #     file.write(str(num_client) + '\n')
 
         if num_client > math.ceil(lambd):
 	    #logger.info("Killing a process")
             terminate_process(alive[0])
             alive.popleft()
-            with open('/vagrant/logs/sinusoid_wave.txt','a+') as file:
-                file.write(str(num_client) + '\n')
+            # with open('/vagrant/logs/sinusoid_wave.txt','a+') as file:
+            #     file.write(str(num_client) + '\n')
 
         # refresh the timer
         now = datetime.datetime.now()
